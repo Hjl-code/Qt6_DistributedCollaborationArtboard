@@ -1,0 +1,24 @@
+使用说明：
+
+①程序使用到了MySQL数据库进行数据的存储，Qt6需要自行编译MySQL驱动。可参考我的博客：https://blog.csdn.net/2302_77646300/article/details/145393954   如果没有成功，实属我的能力有限，请见谅。
+
+②数据库使用到的系列表和结构：
+所属的表		字段			类型			长度		  不是null		键	备注
+UserTable	account		varchar		255(默认)	√		√	账号，长度合适就行，我采取的是默认
+UserTable	id			int			(默认)					画板id，有外码约束，参照CoopTable的id字段，外键被删除时置空，跟随更新
+UserTable	status		varchar		255(默认)	√			状态，其实由于程序比较简易，这个字段起到什么作用，如果您有兴趣进行拓展，可以将其用上
+
+CoopTable	id			int			(默认)		√		√	画板id
+CoopTable	account		varchar		255(默认)	√			主人账号，存储这个画板对应的主人，有外码约束，参照UserTable的account字段，外键被删除时不改变，跟随更新
+CoopTable	account1	varchar		255(默认)				协作者1，存储第一个协作者的账号信息，有外码约束，参照UserTable的account字段，外键被删除时置空，跟随更新
+CoopTable	account2	varchar		255(默认)				协作者2，存储第一个协作者的账号信息，有外码约束，参照UserTable的account字段，外键被删除时置空，跟随更新
+CoopTable	account3	varchar		255(默认)				协作者3，存储第一个协作者的账号信息，有外码约束，参照UserTable的account字段，外键被删除时置空，跟随更新
+CoopTable	timestamp	timestamp	(默认)		√			存储创建画板的时间，其实由于程序比较简易，这个字段起到什么作用，如果您有兴趣进行拓展，可以将其用上
+
+DataTable	count		int			(默认)		√		√	记录绘制数据的条数，自动递增。在实际程序中没有用处
+DataTable	id			int			(默认)		√			存储对应画板的id，表示这个绘制信息属于哪个画板。外键约束，参照CoopTable的id字段，外键被删除时跟随删除，跟随更新
+DataTable	account		varchar		255(默认)	√			存储对应绘制者的账号，表示这个绘制信息是谁绘制的。
+DataTable	data			json			(默认)		√			存储这个绘制的关键信息
+DataTable	timestamp	timestamp	(默认)		√			存储这条绘制信息的绘制时间
+
+③由于我的能力有限（还是学生），程序比较简陋，代码逻辑不严密，还可能有隐藏bug。请见谅。
